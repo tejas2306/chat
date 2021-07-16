@@ -9,8 +9,8 @@ import 'models/user.dart';
 class ChatScreen extends StatefulWidget {
   final User receiver;
   final User sender;
-
-  const ChatScreen({this.receiver, this.sender, Key key}) : super(key: key);
+  final String ip;
+  const ChatScreen({this.ip, this.receiver, this.sender, Key key}) : super(key: key);
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -32,7 +32,7 @@ class _ChatScreenState extends State<ChatScreen> {
     // MessageModel messageModel = MessageModel(sourceId: widget.sourceChat.id.toString(),targetId: );
     // https://sptchat.herokuapp.com
     // http://192.168.29.71:5000
-    socket = IO.io("http://192.168.29.71:5001", <String, dynamic>{
+    socket = IO.io("http://${widget.ip.isEmpty ?  "192.168.29.71" : widget.ip }:5001", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
@@ -66,6 +66,14 @@ class _ChatScreenState extends State<ChatScreen> {
       messages.add(chat);
     });
     socket.emit('msg', chat.toJson());
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    socket.emit("disco", widget.sender.fullName);
+    socket.close();
   }
 
   @override

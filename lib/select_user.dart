@@ -27,6 +27,8 @@ class _SelectuserState extends State<Selectuser> {
     kenil.project = "fairknock";
   }
 
+  TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +37,11 @@ class _SelectuserState extends State<Selectuser> {
       ),
       body: Column(
         children: [
+          TextField(
+            controller: controller..text = "192.168.29.71",
+            decoration: InputDecoration(hintText: "Enter IP Address"),
+          ),
+          Divider(),
           ListTile(
             onTap: () {
               Navigator.push(
@@ -43,6 +50,7 @@ class _SelectuserState extends State<Selectuser> {
                       builder: (context) => ChatScreen(
                             receiver: kenil,
                             sender: tejas,
+                            ip: controller.text,
                           )));
             },
             title: Text("Kenil"),
@@ -56,6 +64,7 @@ class _SelectuserState extends State<Selectuser> {
                       builder: (context) => ChatScreen(
                             receiver: tejas,
                             sender: kenil,
+                            ip: controller.text,
                           )));
             },
             title: Text("Tejas"),
