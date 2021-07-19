@@ -32,7 +32,8 @@ class _ChatScreenState extends State<ChatScreen> {
     // MessageModel messageModel = MessageModel(sourceId: widget.sourceChat.id.toString(),targetId: );
     // https://sptchat.herokuapp.com
     // http://192.168.29.71:5000
-    socket = IO.io("http://${widget.ip.isEmpty ?  "192.168.29.71" : widget.ip }:5001", <String, dynamic>{
+    // "http://${widget.ip.isEmpty ?  "192.168.29.71" : widget.ip }:5001"
+    socket = IO.io("https://sptchat.herokuapp.com", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
